@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UF Productions · Yellow preview</title>
+<meta name="description" content="UF Productions by Umar Farooq: AI UGC, animated story ads, sung narration ads, VSLs and AI documentaries for DTC and supplement brands.">
+<link rel="icon" type="image/png" href="img/logo-96.png">
+<meta property="og:title" content="UF Productions · AI video ads">
+<meta property="og:description" content="AI UGC, animated story ads, sung narration ads and VSLs for DTC and supplement brands.">
+<meta property="og:image" content="https://ufproductions.com/img/logo.jpg">
+<meta property="og:url" content="https://ufproductions.com/">
+<meta name="theme-color" content="#f6bb2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a gold-on-maroon screening room. One committed dark world taken from the UF logo:
+   deep maroon ground, gold for anything you can act on, cream for reading. */
+:root {
+  color-scheme: dark;
+  --bg: #170a0d;
+  --surface: #2a1219;
+  --line: rgba(242, 182, 48, .16);
+  --ink: #f7efe3;
+  --muted: #cdb8a8;
+  --gold: #f2b630;
+  --gold-2: #ffd56e;
+  --maroon: #7a1f33;
+  --on-gold: #1d0b10;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --caps: "Cinzel", "Trajan Pro", Georgia, serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; overflow-x: clip; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+::selection { background: var(--gold); color: var(--on-gold); }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+
+.glow { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.glow::before, .glow::after { content: ""; position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(90px); }
+.glow::before { background: radial-gradient(circle, var(--maroon), transparent 65%); top: -20vmax; left: -15vmax; opacity: .38; animation: drift 22s ease-in-out infinite alternate; }
+.glow::after { background: radial-gradient(circle, rgba(242, 182, 48, .55), transparent 65%); bottom: -30vmax; right: -20vmax; opacity: .14; animation: drift 28s ease-in-out infinite alternate-reverse; }
+@keyframes drift { to { transform: translate(8vmax, 6vmax) scale(1.1); } }
+
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); }
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: rgba(23, 10, 13, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, background .3s; }
+.topbar.scrolled { border-bottom-color: var(--line); background: rgba(23, 10, 13, .92); }
+.topbar-in { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo img { width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 6px 18px rgba(0, 0, 0, .35); }
+.logo-word { font-family: var(--caps); font-weight: 700; font-size: 17px; letter-spacing: .06em; color: var(--gold); line-height: 1; }
+.logo-word small { display: block; font-size: 10px; letter-spacing: .32em; color: var(--muted); margin-top: 4px; font-weight: 500; }
+.nav { display: flex; align-items: center; gap: 24px; }
+.nav a { text-decoration: none; font-size: 14px; color: var(--muted); font-weight: 600; transition: color .2s; }
+.nav a:hover { color: var(--gold-2); }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 700 15px var(--body); padding: 13px 20px; border-radius: 999px; text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: transform .2s, box-shadow .25s, background .2s, color .2s, border-color .2s; }
+.btn-gold { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: var(--on-gold); box-shadow: 0 8px 24px rgba(242, 182, 48, .22); }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(242, 182, 48, .38); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: rgba(255, 255, 255, .02); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-2); }
+.nav .btn { padding: 10px 16px; font-size: 14px; color: var(--on-gold); }
+
+.hero { padding-block: 64px 48px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px; align-items: center; }
+.eyebrow { font-family: var(--caps); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(42px, 6.2vw, 76px); line-height: 1.02; letter-spacing: -.02em; margin: 16px 0 20px; text-wrap: balance; }
+h1 .gold { display: block; background: linear-gradient(100deg, var(--gold) 10%, var(--gold-2) 30%, #fff3cc 45%, var(--gold) 60%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 5s linear infinite; font-style: italic; }
+@keyframes shimmer { to { background-position: -220% 0; } }
+.lede { font-size: 18px; color: var(--muted); max-width: 48ch; margin: 0 0 26px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+.fact { font-family: var(--mono); font-size: 12px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); background: rgba(242, 182, 48, .05); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-copy > * { animation: rise .8s cubic-bezier(.2, .7, .2, 1) both; }
+.hero-copy > :nth-child(2) { animation-delay: .08s; } .hero-copy > :nth-child(3) { animation-delay: .16s; } .hero-copy > :nth-child(4) { animation-delay: .24s; } .hero-copy > :nth-child(5) { animation-delay: .32s; }
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+.reel { position: relative; display: flex; justify-content: center; height: 430px; animation: fade 1.2s .2s both; }
+.reel a { position: absolute; width: 176px; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 22px 50px rgba(0, 0, 0, .55), 0 0 0 1px var(--line); animation: float 6s ease-in-out infinite; }
+.reel img { width: 100%; height: 100%; object-fit: cover; }
+.reel a:nth-child(1) { transform: translateX(-176px) rotate(-9deg) scale(.84); z-index: 1; }
+.reel a:nth-child(2) { transform: translateX(-92px) rotate(-4deg) scale(.92); z-index: 2; animation-delay: -1.2s; }
+.reel a:nth-child(3) { z-index: 5; animation-delay: -2.4s; box-shadow: 0 26px 60px rgba(0, 0, 0, .6), 0 0 0 2px var(--gold); }
+.reel a:nth-child(4) { transform: translateX(92px) rotate(4deg) scale(.92); z-index: 2; animation-delay: -3.6s; }
+.reel a:nth-child(5) { transform: translateX(176px) rotate(9deg) scale(.84); z-index: 1; animation-delay: -4.8s; }
+.reel a:hover { z-index: 9; }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+
+.marquee { overflow: hidden; border-block: 1px solid var(--line); background: linear-gradient(90deg, rgba(122, 31, 51, .35), rgba(242, 182, 48, .06), rgba(122, 31, 51, .35)); padding-block: 16px; }
+.marquee-track { display: flex; gap: 40px; width: max-content; animation: slide 40s linear infinite; }
+.marquee span { font: italic 600 clamp(19px, 2.4vw, 27px) var(--display); white-space: nowrap; display: inline-flex; align-items: center; gap: 40px; }
+.marquee span::after { content: "✦"; color: var(--gold); font-style: normal; font-size: .7em; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+section { padding-block: 56px; }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; margin-bottom: 26px; }
+.kicker { font-family: var(--caps); font-size: 12px; letter-spacing: .24em; color: var(--gold); text-transform: uppercase; }
+h2 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -.01em; margin: 8px 0 0; text-wrap: balance; position: relative; padding-bottom: 14px; }
+h2::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 64px; background: linear-gradient(90deg, var(--gold), transparent); transform-origin: left; transition: transform .9s .2s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal h2::after { transform: scaleX(0); }
+.js .reveal.in h2::after { transform: scaleX(1); }
+.sec-note { color: var(--muted); max-width: 56ch; margin: 12px 0 0; }
+.count { font-family: var(--mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 6px 10px; border-radius: 999px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 22px; }
+.grid.wide-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.card { display: flex; flex-direction: column; gap: 10px; text-decoration: none; min-width: 0; }
+.card-thumb { position: relative; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 14px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--line); transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s; }
+.card.wide .card-thumb { aspect-ratio: 16 / 9; }
+.card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .7, .2, 1), filter .4s; filter: saturate(.92); }
+.card-thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(23, 10, 13, .75)); }
+.card:hover .card-thumb { transform: translateY(-6px); box-shadow: 0 0 0 1px var(--gold), 0 22px 44px rgba(0, 0, 0, .5); }
+.card:hover .card-thumb img { transform: scale(1.05); filter: saturate(1.1); }
+.play { position: absolute; left: 12px; bottom: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; padding: 7px 11px; border-radius: 999px; background: rgba(23, 10, 13, .78); color: var(--ink); border: 1px solid var(--line); transition: background .25s, color .25s; }
+.play::before { content: ""; border-left: 8px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.card:hover .play { background: var(--gold); color: var(--on-gold); border-color: var(--gold); }
+.stage { position: absolute; top: 10px; left: 10px; z-index: 2; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; padding: 4px 8px; border-radius: 6px; background: var(--gold); color: var(--on-gold); }
+.card h3 { font-family: var(--display); font-weight: 600; font-size: 19px; line-height: 1.2; margin: 2px 0 0; }
+.card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.js .reveal .card { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); transition-delay: calc(var(--i, 0) * 70ms); }
+.js .reveal.in .card { opacity: 1; transform: none; }
+.js .reveal .sec-head { opacity: 0; transform: translateY(18px); transition: opacity .7s, transform .7s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal.in .sec-head { opacity: 1; transform: none; }
+
+.hooks { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 36px; align-items: center; background: linear-gradient(135deg, rgba(122, 31, 51, .45), rgba(42, 18, 25, .9)); border: 1px solid var(--line); border-radius: 22px; padding: 34px; }
+.hooks p { color: var(--muted); margin: 12px 0 0; max-width: 44ch; }
+.hook-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.hook-label { font-family: var(--mono); font-size: 12px; color: var(--gold); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.tab { font: 500 12px var(--mono); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.tab:hover { border-color: var(--gold); }
+.tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+
+.about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 48px; align-items: center; }
+.portrait-wrap { position: relative; padding: 6px; border-radius: 30px; width: 100%; max-width: 460px; justify-self: center; animation: float 7s ease-in-out infinite; isolation: isolate; }
+.portrait-wrap::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(from var(--spin, 0deg), var(--gold), transparent 25%, var(--maroon) 50%, transparent 75%, var(--gold)); animation: spin 6s linear infinite; z-index: -1; }
+.portrait-wrap::after { content: ""; position: absolute; inset: -18px; border-radius: 40px; background: radial-gradient(circle, rgba(242, 182, 48, .35), transparent 65%); filter: blur(24px); z-index: -2; animation: breathe 5s ease-in-out infinite; }
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+@keyframes breathe { 50% { opacity: .55; transform: scale(.96); } }
+.portrait { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 1 / 1; max-width: 100%; background: var(--surface); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+.portrait:hover img { transform: scale(1.04); }
+.portrait::before { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(115deg, transparent 35%, rgba(255, 243, 204, .35) 50%, transparent 65%); transform: translateX(-120%); animation: shine 5.5s ease-in-out infinite 1.5s; pointer-events: none; }
+@keyframes shine { 0%, 60% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+.portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(23, 10, 13, .85)); }
+.name-plate { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 3; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.name-plate b { display: block; font: 700 clamp(26px, 3.2vw, 36px)/1.05 var(--display); color: #fff7e6; text-shadow: 0 4px 18px rgba(0, 0, 0, .5); }
+.name-plate small { display: block; margin-top: 6px; font: 700 11px var(--caps); letter-spacing: .2em; color: var(--gold-2); }
+.name-plate img { width: 46px; height: 46px; border-radius: 12px; box-shadow: 0 0 0 1px rgba(255, 213, 110, .45); flex: none; }
+.js .reveal .portrait-wrap { opacity: 0; transform: scale(.92) rotate(-2deg); transition: opacity .9s, transform 1s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal.in .portrait-wrap { opacity: 1; transform: none; }
+.chips-float { position: absolute; z-index: 4; font: 500 12px var(--mono); padding: 8px 12px; border-radius: 999px; background: var(--gold); color: var(--on-gold); box-shadow: 0 10px 24px rgba(0, 0, 0, .35); animation: float 5s ease-in-out infinite; }
+.chips-float.c1 { top: 8%; left: -14px; }
+.chips-float.c2 { top: 38%; right: -18px; animation-delay: -1.6s; }
+.chips-float.c3 { top: 64%; left: -10px; animation-delay: -3.2s; }
+.about p { color: var(--muted); max-width: 56ch; }
+.about strong { color: var(--ink); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.tool { font: 500 12px var(--mono); padding: 7px 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+
+.steps-wrap { padding-top: 34px; }
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; position: relative; }
+.steps::before { content: ""; position: absolute; top: 0; left: 16%; right: 16%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--maroon), var(--gold)); opacity: .45; transform-origin: left; transition: transform 1.4s .3s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal .steps::before { transform: scaleX(0); }
+.js .reveal.in .steps::before { transform: scaleX(1); }
+.step { position: relative; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px 20px 22px; min-width: 0; transition: transform .3s, border-color .3s; }
+.step:hover { transform: translateY(-4px); border-color: var(--gold); }
+.icon { width: 64px; height: 64px; margin: -58px auto 14px; border-radius: 18px; display: grid; place-items: center; background: linear-gradient(135deg, var(--gold-2), var(--gold)); box-shadow: 0 10px 26px rgba(242, 182, 48, .28); position: relative; z-index: 1; animation: bob 4s ease-in-out infinite; }
+.step:nth-child(2) .icon { animation-delay: -1.3s; } .step:nth-child(3) .icon { animation-delay: -2.6s; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+.icon svg { width: 30px; height: 30px; stroke: var(--on-gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 80; stroke-dashoffset: 0; }
+.js .reveal .icon svg { stroke-dashoffset: 80; }
+.js .reveal.in .icon svg { animation: draw 1.4s forwards; }
+.js .reveal.in .step:nth-child(2) .icon svg { animation-delay: .35s; }
+.js .reveal.in .step:nth-child(3) .icon svg { animation-delay: .7s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.step-n { font: 500 11px var(--mono); color: var(--gold); letter-spacing: .1em; }
+.step h3 { font-family: var(--display); font-weight: 600; font-size: 21px; margin: 6px 0; }
+.step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.contact { margin-block: 30px 40px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 34px; align-items: center; background: radial-gradient(120% 140% at 0% 0%, rgba(122, 31, 51, .7), rgba(42, 18, 25, .95) 60%); border: 1px solid var(--line); border-radius: 26px; padding: 40px; position: relative; overflow: hidden; }
+.contact::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; background: url(img/logo.jpg) center / cover; opacity: .08; border-radius: 50%; pointer-events: none; }
+.contact h2 { font-size: clamp(32px, 4.4vw, 50px); }
+.contact p { color: var(--muted); max-width: 46ch; }
+.reach { display: grid; gap: 12px; position: relative; z-index: 1; min-width: 0; }
+.reach-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; background: rgba(23, 10, 13, .6); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.reach-row > div { min-width: 0; }
+.reach-row small { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.reach-row .v { font: 600 18px var(--body); user-select: all; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.copied { font-size: 13px; color: var(--gold); min-height: 1.2em; }
+.socials { display: flex; gap: 10px; }
+.socials a { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; border: 1px solid var(--line); transition: border-color .2s, transform .2s; }
+.socials a:hover { border-color: var(--gold); transform: translateY(-2px); }
+.socials svg { width: 20px; height: 20px; fill: var(--ink); }
+footer.foot { border-top: 1px solid var(--line); padding-block: 22px 96px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+.wa-float { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(18px, env(safe-area-inset-bottom, 0px)); z-index: 25; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 10px 28px rgba(0, 0, 0, .4); transition: transform .2s; }
+.wa-float::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: ping 2.4s ease-out infinite; }
+@keyframes ping { from { transform: scale(1); opacity: .7; } to { transform: scale(1.6); opacity: 0; } }
+.wa-float:hover { transform: scale(1.08); }
+.wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+.player { position: fixed; inset: 0; z-index: 50; background: rgba(10, 4, 6, .9); display: flex; align-items: center; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); animation: fade .25s; }
+@keyframes fade { from { opacity: 0; } }
+.player-box { position: relative; width: min(420px, 92vw, calc((100vh - 110px) * 9 / 16)); aspect-ratio: 9 / 16; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px var(--gold), 0 30px 80px rgba(0, 0, 0, .7); animation: pop .3s cubic-bezier(.2, .7, .2, 1); }
+.player-box.wide { width: min(1000px, 92vw, calc((100vh - 110px) * 16 / 9)); aspect-ratio: 16 / 9; }
+@keyframes pop { from { transform: scale(.94); opacity: 0; } }
+.player-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.player-close { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); font: 700 15px var(--body); background: var(--gold); color: var(--on-gold); border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .hero, .hooks, .about, .contact { grid-template-columns: minmax(0, 1fr); }
+  .reel { height: 360px; }
+  .reel a { width: 146px; }
+  .reel a:nth-child(1) { transform: translateX(-130px) rotate(-9deg) scale(.8); }
+  .reel a:nth-child(2) { transform: translateX(-68px) rotate(-4deg) scale(.9); }
+  .reel a:nth-child(4) { transform: translateX(68px) rotate(4deg) scale(.9); }
+  .reel a:nth-child(5) { transform: translateX(130px) rotate(9deg) scale(.8); }
+  .steps { grid-template-columns: minmax(0, 1fr); gap: 54px; }
+  .steps::before { display: none; }
+  .portrait-wrap { max-width: 400px; }
+  .contact { padding: 28px; }
+}
+@media (max-width: 700px) { .nav a:not(.btn) { display: none; } .logo-word small { display: none; } }
+@media (max-width: 480px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .grid.wide-grid { grid-template-columns: minmax(0, 1fr); }
+  .card h3 { font-size: 16px; }
+  .hooks { padding: 20px; }
+  .hook-row { gap: 8px; }
+  .reel a:nth-child(1), .reel a:nth-child(5) { display: none; }
+  .nav .btn { padding: 9px 12px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal .card, .js .reveal .sec-head { opacity: 1; transform: none; }
+  .js .reveal .icon svg { stroke-dashoffset: 0; }
+}
+</style>
+<style id="yellow-theme">
+/* Preview: yellow base, maroon support */
+:root { color-scheme: light; --bg: #f6bb2e; --surface: #ffd667; --line: rgba(74, 16, 30, .2); --ink: #2a0910; --muted: #5a2430; --gold: #7a1f33; --gold-2: #a12a47; --maroon: #fff0b8; --on-gold: #ffe38f; }
+body::before { background: #f6bb2e; }
+.topbar { background: rgba(246, 187, 46, .82); }
+.topbar.scrolled { background: rgba(246, 187, 46, .95); }
+.glow::before { opacity: .55; } .glow::after { background: radial-gradient(circle, rgba(122, 31, 51, .35), transparent 65%); opacity: .25; }
+h1 .gold { background: linear-gradient(100deg, #7a1f33 10%, #a12a47 30%, #c94a66 45%, #7a1f33 60%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; }
+.fact { background: rgba(122, 31, 51, .06); }
+.play { color: #fff7e6; }
+.card:hover .play { color: #ffe38f; }
+.marquee { background: #7a1f33; border-color: transparent; }
+.marquee span { color: #ffe38f; } .marquee span::after { color: #fff7e6; }
+.btn-gold { background: linear-gradient(135deg, #9c2843, #7a1f33); box-shadow: 0 8px 24px rgba(122, 31, 51, .3); }
+.btn-ghost { background: rgba(255, 255, 255, .25); }
+.hooks, .contact { --ink: #fff4dc; --muted: #f1cfa0; --line: rgba(255, 213, 110, .25); --gold: #ffc93c; --gold-2: #ffe08a; --on-gold: #3a0b15; --surface: #5a1524; color: var(--ink); background: linear-gradient(135deg, #7a1f33, #4a0f1d); }
+.reach-row { background: rgba(0, 0, 0, .18); }
+.name-plate small { color: #ffd56e; }
+.portrait-wrap::after { background: radial-gradient(circle, rgba(122, 31, 51, .45), transparent 65%); }
+.step { background: #ffd667; }
+.preview-bar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 45; display: flex; gap: 10px; align-items: center; background: #2a0910; color: #ffe38f; font: 600 13px var(--body); padding: 10px 12px 10px 18px; border-radius: 999px; box-shadow: 0 12px 30px rgba(0, 0, 0, .35); max-width: calc(100vw - 110px); }
+.preview-bar a { background: #ffe38f; color: #2a0910; text-decoration: none; padding: 7px 12px; border-radius: 999px; white-space: nowrap; }
+</style></head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<div class="preview-bar">Yellow theme preview <a href="index.html">See maroon version</a></div>
+
+<div class="topbar" id="topbar">
+  <div class="topbar-in">
+    <a class="logo" href="#top" aria-label="UF Productions home"><img src="img/logo-96.png" alt=""><span class="logo-word">UF<small>PRODUCTIONS</small></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#films">Films</a>
+      <a href="#about">About</a>
+      <a class="btn btn-gold" href="#contact">Get a free sample</a>
+    </nav>
+  </div>
+</div>
+
+<header class="wrap hero" id="top">
+  <div class="hero-copy">
+    <div class="eyebrow">UF Productions · AI video ads</div>
+    <h1>Ads that look filmed. <span class="gold">Made with AI.</span></h1>
+    <p class="lede">I'm Umar Farooq. I make AI UGC, animated story ads, sung narration ads and long-form VSLs for DTC and supplement brands that test a lot of creative. Every concept comes with several hooks, ready to run.</p>
+    <div class="facts">
+      <span class="fact">AI UGC</span>
+      <span class="fact">Pixar · Claymation · 3D</span>
+      <span class="fact">Sung narration</span>
+      <span class="fact">VSLs &amp; documentaries</span>
+      <span class="fact">3–5 hooks per concept</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-gold" href="https://wa.me/923223876951" target="_blank" rel="noopener">Message on WhatsApp</a>
+      <a class="btn btn-ghost" href="#work">See the work</a>
+    </div>
+  </div>
+  <div class="reel" aria-label="Featured ads">
+    <a href="https://drive.google.com/file/d/1cCJvmi1H7dPXTZ1_khHeN6UAuI5y49Kg/view" target="_blank" rel="noopener"><img src="thumbs/pixar.jpg" alt="Pixar-style animated ad"></a>
+    <a href="https://www.youtube.com/watch?v=tkokDnn5QWk" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/tkokDnn5QWk/oar2.jpg" alt="AI UGC with a health expert"></a>
+    <a href="https://drive.google.com/file/d/1ulK-edLzIfvwSOH9bh9P84DJjB0OL0kE/view" target="_blank" rel="noopener"><img src="thumbs/ugc1.jpg" alt="Realistic AI UGC ad"></a>
+    <a href="https://www.youtube.com/watch?v=UPvL1RvzIqM" data-ratio="wide" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/UPvL1RvzIqM/oar2.jpg" alt="Animated ad with a sung voiceover"></a>
+    <a href="https://www.youtube.com/watch?v=FyirbrbskpE" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/FyirbrbskpE/oar2.jpg" alt="3D skeleton character ad"></a>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>AI UGC</span><span>Pixar-style stories</span><span>Claymation</span><span>3D anatomy</span><span>Sung narration</span><span>Mini-dramas</span><span>VSLs</span><span>AI documentaries</span>
+    <span>AI UGC</span><span>Pixar-style stories</span><span>Claymation</span><span>3D anatomy</span><span>Sung narration</span><span>Mini-dramas</span><span>VSLs</span><span>AI documentaries</span>
+  </div>
+</div>
+
+<main class="wrap" id="work">
+
+  <section class="reveal" id="about" aria-labelledby="about-h">
+    <div class="about">
+      <div class="portrait-wrap">
+        <div class="portrait">
+          <img src="img/umar.jpg" alt="Umar Farooq, founder of UF Productions">
+          <div class="name-plate"><div><b>Umar Farooq</b><small>Founder · UF Productions</small></div><img src="img/logo-96.png" alt=""></div>
+        </div>
+        <span class="chips-float c1" aria-hidden="true">AI UGC</span>
+        <span class="chips-float c2" aria-hidden="true">Pixar 3D</span>
+        <span class="chips-float c3" aria-hidden="true">VSLs</span>
+      </div>
+      <div>
+        <div class="kicker">About</div>
+        <h2 id="about-h">Hi, I'm Umar.</h2>
+        <p>I run <strong>UF Productions</strong>, a small AI video studio. I write, generate and edit every ad myself, from the hook to the final cut, so the story stays tight and nothing gets lost between people.</p>
+        <p>Most of my work is for <strong>DTC and supplement brands</strong> on Meta and TikTok: AI UGC, animated story ads, sung narration ads and VSLs. I also make long AI documentaries and viral reels.</p>
+        <div class="tools" aria-label="Tools I use">
+          <span class="tool">Higgsfield</span><span class="tool">Kling</span><span class="tool">Veo</span><span class="tool">Seedance</span><span class="tool">Runway</span><span class="tool">MiniMax</span><span class="tool">OpenArt</span><span class="tool">Arcads</span><span class="tool">Premiere Pro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="ugc-h">
+    <div class="sec-head">
+      <div><div class="kicker">01 · Realistic</div><h2 id="ugc-h">AI UGC</h2><p class="sec-note">People talking to camera, the way real customers film themselves. Men, women, 30s to 60s+.</p></div>
+      <span class="count">8 ads</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://drive.google.com/file/d/1ulK-edLzIfvwSOH9bh9P84DJjB0OL0kE/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">TOF</span><img src="thumbs/ugc1.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>"I tried everything"</h3><p>Men's fitness brand · men 40+</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1FHRE9PWh09kLwPTdEFd7qsJVHeeQ7RPM/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">TOF</span><img src="thumbs/cine.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Dad bod after kids</h3><p>Cinematic UGC · men's fitness</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=tkokDnn5QWk" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/tkokDnn5QWk/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Health expert explains</h3><p>Medical brand · expert character</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=6_rGknikHn8" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/6_rGknikHn8/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Doctor with the product</h3><p>Medical brand · selfie UGC</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=c31uRzNF940" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/c31uRzNF940/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>"5/10, did not fix it"</h3><p>Medical brand · honest review</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=RdLLL1HrSrI" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/RdLLL1HrSrI/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Skincare routine</h3><p>Beauty brand · women</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1eA1Z9B3f5NWN5X8tWoR5rMgW9jANsNzw/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/older.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Women 60+</h3><p>Mobility brand · selfie UGC</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1HvJAfY6cFk3l8pxoSYo8V3bnGMbD5yB_/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">BOF</span><img src="thumbs/founder.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Founder in the warehouse</h3><p>Urgency and offer angle</p></a>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="anim-h">
+    <div class="sec-head">
+      <div><div class="kicker">02 · Animated</div><h2 id="anim-h">Animation</h2><p class="sec-note">Pixar-style characters, claymation, product mascots and "inside the body" explainers for supplement and health claims.</p></div>
+      <span class="count">8 ads</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://drive.google.com/file/d/1cCJvmi1H7dPXTZ1_khHeN6UAuI5y49Kg/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">TOF</span><img src="thumbs/pixar.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>30-day transformation</h3><p>Pixar style · busy dad story</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1ygW0b2COx9255JHQXuPSRcoqfwWzask_/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/anim2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Meet Bob</h3><p>Pixar style · night-time story</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=FyirbrbskpE" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/FyirbrbskpE/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Talking skeleton</h3><p>3D character · teeth care brand</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=o7Cub4Dg_gU" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/o7Cub4Dg_gU/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Product mascot</h3><p>3D character · gummies brand</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=v0zTQ6GUuNg" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/v0zTQ6GUuNg/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Shapewear story</h3><p>Pixar style · fitness clothing brand</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1mst3Wv_YYhX5RXz2B5tV0-DQyvvYTDnd/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">TOF</span><img src="thumbs/belly.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Inside the belly</h3><p>3D anatomy animation</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1yTuFBIoY830qfeXuNVQY8wFXUZkCdpg5/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/eye.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>What happens to your eyes</h3><p>Realistic 3D medical · eye health</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1626Pj58I3ZpyJHfU6RgeTNVttsc8hxBg/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/clay.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Claymation</h3><p>Cartoon ad restyled as clay</p></a>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="sung-h">
+    <div class="sec-head">
+      <div><div class="kicker">03 · Music</div><h2 id="sung-h">Sung narration ads</h2><p class="sec-note">The voiceover is a short song. It sticks in the head, and people watch to the end to hear how it finishes.</p></div>
+      <span class="count">2 ads</span>
+    </div>
+    <div class="grid wide-grid">
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=KkLU5XNET_M" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/KkLU5XNET_M/hqdefault.jpg" alt="" loading="lazy"><span class="play">Listen</span></div><h3>The nurse's kitchen</h3><p>Health brand · Pixar style</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=UPvL1RvzIqM" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/UPvL1RvzIqM/hqdefault.jpg" alt="" loading="lazy"><span class="play">Listen</span></div><h3>The man in tears</h3><p>Health brand · Pixar style</p></a>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="story-h">
+    <div class="sec-head">
+      <div><div class="kicker">04 · Story</div><h2 id="story-h">Story ads &amp; VSLs</h2><p class="sec-note">Mini-dramas with recurring characters, skeptic-style hooks, and full video sales letters.</p></div>
+      <span class="count">3 ads</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://drive.google.com/file/d/1axJeKf6d02MjDO5dd7jUCAmvaYKQbS3Z/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">TOF</span><img src="thumbs/drama.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>14-day mini-drama</h3><p>4 characters, 4 problems</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1707MODoxCcUSz3i9qsK-zbS092SHjLVN/view" target="_blank" rel="noopener"><div class="card-thumb"><span class="stage">MOF</span><img src="thumbs/apology.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>"We owe you an apology"</h3><p>Skeptic angle · tried everything</p></a>
+      <a class="card" href="https://drive.google.com/file/d/1xz2JXq1gHISZEJqXcUZ0r4G08S----Am/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/vsl.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Long-form VSL</h3><p>"After 40, getting your abs back"</p></a>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="hooks-h">
+    <div class="hooks">
+      <div>
+        <div class="kicker">How I deliver</div>
+        <h2 id="hooks-h">One concept, three openings</h2>
+        <p>The first three seconds decide most of an ad's results. Every concept ships with different hooks on the same body, so you test which one wins.</p>
+      </div>
+      <div class="hook-row">
+        <a class="card" href="https://drive.google.com/file/d/1ulK-edLzIfvwSOH9bh9P84DJjB0OL0kE/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/ugc1.jpg" alt="" loading="lazy"><span class="play">H1</span></div><span class="hook-label">Hook 1</span></a>
+        <a class="card" href="https://drive.google.com/file/d/179ME90uk49JGZtKFbEN7atI43zD9W1rX/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/ugc2.jpg" alt="" loading="lazy"><span class="play">H2</span></div><span class="hook-label">Hook 2</span></a>
+        <a class="card" href="https://drive.google.com/file/d/1eWXZY642UQ0R-bstmCVi2sNeTkJkvSCc/view" target="_blank" rel="noopener"><div class="card-thumb"><img src="thumbs/ugc3.jpg" alt="" loading="lazy"><span class="play">H3</span></div><span class="hook-label">Hook 3</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" id="films" aria-labelledby="films-h">
+    <div class="sec-head">
+      <div><div class="kicker">05 · Long form</div><h2 id="films-h">AI documentaries &amp; films</h2><p class="sec-note">Netflix-style documentaries and widescreen explainers. Click any film to watch it right here.</p></div>
+      <span class="count">6 films</span>
+    </div>
+    <div class="grid wide-grid">
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=mvPktGEAa1Q" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/mvPktGEAa1Q/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch film</span></div><h3>The Aztecs</h3><p>Documentary · 21 min</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=XA18ql_xPu8" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/XA18ql_xPu8/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch film</span></div><h3>Pharaoh</h3><p>Documentary</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=-5zylOCC8lw" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/-5zylOCC8lw/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch film</span></div><h3>Atlantis</h3><p>Documentary</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=r6gbcBE5aCg" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/r6gbcBE5aCg/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch film</span></div><h3>Lost civilization</h3><p>Documentary</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=cCAYbkr78Vg" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/cCAYbkr78Vg/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Macro object explainer</h3><p>Close-up explainer</p></a>
+      <a class="card wide" data-ratio="wide" href="https://www.youtube.com/watch?v=6w5Rv9-fPY0" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/6w5Rv9-fPY0/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Macro object explainer 2</h3><p>Close-up explainer</p></a>
+    </div>
+  </section>
+
+  <section class="reveal" aria-labelledby="more-h">
+    <div class="sec-head">
+      <div><div class="kicker">06 · Beyond ads</div><h2 id="more-h">More from UF Productions</h2><p class="sec-note">More UGC, viral animal stories, series and kids' content.</p></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="More work">
+      <button class="tab" role="tab" aria-selected="true" data-tab="ugc2">More UGC</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="animal">Animal stories</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="series">Viral series</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="rhymes">Kids' rhymes</button>
+    </div>
+    <div class="grid" data-panel="ugc2">
+      <a class="card" href="https://www.youtube.com/watch?v=5MFpHe8mkHg" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/5MFpHe8mkHg/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Hair care</h3><p>Realistic model · hair brand</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=E1WOALGg0qo" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/E1WOALGg0qo/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Soap brand</h3><p>Realistic characters · hook variation</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=DXu9wB4ZB2g" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/DXu9wB4ZB2g/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Online job service</h3><p>Realistic characters · web service</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=C7GDiCGB1_M" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/C7GDiCGB1_M/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>EMS belt at the desk</h3><p>Realistic UGC · fitness brand</p></a>
+    </div>
+    <div class="grid" data-panel="animal" hidden>
+      <a class="card" href="https://www.youtube.com/watch?v=pUWCz6BYvTI" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/pUWCz6BYvTI/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Cow couple</h3><p>Emotional animal story</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=Lu5LLan79Iw" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/Lu5LLan79Iw/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Baby cat rescue</h3><p>Emotional animal story</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=OUCGB1ZSOHs" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/OUCGB1ZSOHs/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Cute kitten</h3><p>Emotional animal story</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=qPQQUV-NtVk" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/qPQQUV-NtVk/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Cat family</h3><p>Emotional animal story</p></a>
+    </div>
+    <div class="grid" data-panel="series" hidden>
+      <a class="card" href="https://www.youtube.com/watch?v=Zvs4okCZcFY" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/Zvs4okCZcFY/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Episode 01</h3><p>Viral niche series</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=BYk9PJUIKfo" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/BYk9PJUIKfo/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Tiny Mo, episode 01</h3><p>Viral niche series</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=L4fVjQjyPjE" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/L4fVjQjyPjE/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Series sample</h3><p>Viral niche series</p></a>
+    </div>
+    <div class="grid" data-panel="rhymes" hidden>
+      <a class="card" href="https://www.youtube.com/watch?v=xTJicKaUSXU" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/xTJicKaUSXU/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Swim time</h3><p>Kids' rhyme reel</p></a>
+      <a class="card" href="https://www.youtube.com/watch?v=59vTMRIyhbg" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/59vTMRIyhbg/oar2.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Tie your shoes</h3><p>Kids' rhyme reel</p></a>
+      <a class="card" data-ratio="wide" href="https://www.youtube.com/watch?v=R7kxblffHgk" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/R7kxblffHgk/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Baby shark dance</h3><p>Kids' rhyme · widescreen</p></a>
+      <a class="card" data-ratio="wide" href="https://www.youtube.com/watch?v=X-e0EaagpTE" target="_blank" rel="noopener"><div class="card-thumb"><img src="https://i.ytimg.com/vi/X-e0EaagpTE/hqdefault.jpg" alt="" loading="lazy"><span class="play">Watch</span></div><h3>Rhyme sample</h3><p>Kids' rhyme · widescreen</p></a>
+    </div>
+  </section>
+
+
+
+  <section class="reveal" aria-labelledby="proc-h">
+    <div class="sec-head"><div><div class="kicker">Process</div><h2 id="proc-h">How working together goes</h2></div></div>
+    <div class="steps-wrap">
+      <ol class="steps">
+        <li class="step">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
+          <div class="step-n">STEP 1</div><h3>You send a brief</h3><p>Product, audience, an ad you like and what you want to test.</p>
+        </li>
+        <li class="step">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+          <div class="step-n">STEP 2</div><h3>Script and hooks</h3><p>I write the script and 3–5 openings, and you approve them before anything is made.</p>
+        </li>
+        <li class="step">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></div>
+          <div class="step-n">STEP 3</div><h3>Ads delivered</h3><p>Finished 9:16 videos with captions, ready for Meta and TikTok. Your first sample is free.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="contact reveal" id="contact" aria-labelledby="contact-h">
+    <div>
+      <div class="kicker">Let's work</div>
+      <h2 id="contact-h">Have a product to test?</h2>
+      <p>Send me a brief and I'll make your first sample for free. WhatsApp is the fastest way to reach me.</p>
+      <div class="cta" style="margin-top:20px"><a class="btn btn-gold" href="https://wa.me/923223876951" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+    </div>
+    <div class="reach">
+      <div class="reach-row"><div><small>WhatsApp</small><span class="v" id="num">+92 322 3876951</span></div><button class="btn btn-ghost" type="button" id="copy">Copy</button></div>
+      <div class="reach-row"><div><small>Email</small><span class="v">umarsmedia@gmail.com</span></div></div>
+      <div class="reach-row"><div><small>Find me on</small><span class="v" style="font-size:15px">LinkedIn · Facebook</span></div>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/umar-farooq-3ab007299/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+          <a href="https://web.facebook.com/profile.php?id=100084393908084" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+        </div>
+      </div>
+      <span class="copied" id="copied" aria-live="polite"></span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap foot">
+  <span>© 2026 UF Productions · Umar Farooq</span>
+  <span>AI video ads for DTC &amp; supplement brands</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/923223876951" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.6l-.4-.3-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.8-3.8-1.8-5.9C5 9.9 10 5.1 16 5.1s11 4.8 11 10.7-5 10.6-11 10.6zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg></a>
+
+<div class="player" id="player" hidden role="dialog" aria-modal="true" aria-label="Video player">
+  <button class="player-close" type="button" id="player-close">Close ✕</button>
+  <div class="player-box" id="player-box"></div>
+</div>
+
+<script>
+(function () {
+  document.getElementById('copy').addEventListener('click', function () {
+    var msg = document.getElementById('copied');
+    function selectIt() { var r = document.createRange(); r.selectNodeContents(document.getElementById('num')); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = 'Number selected. Press Ctrl+C to copy.'; }
+    try { navigator.clipboard.writeText('+923223876951').then(function () { msg.textContent = 'Number copied.'; }, selectIt); } catch (e) { selectIt(); }
+  });
+
+  var player = document.getElementById('player'), box = document.getElementById('player-box'), lastFocus = null;
+  function embedFor(href) {
+    var m = href.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+    if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+    m = href.match(/youtube\.com\/watch\?v=([\w-]+)/);
+    if (m) return 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+    return null;
+  }
+  function openPlayer(src, wide) {
+    lastFocus = document.activeElement;
+    box.className = 'player-box' + (wide ? ' wide' : '');
+    box.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Video"></iframe>';
+    player.hidden = false; document.body.style.overflow = 'hidden';
+    document.getElementById('player-close').focus();
+  }
+  function closePlayer() { player.hidden = true; box.innerHTML = ''; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]'); if (!a) return;
+    var src = embedFor(a.href); if (!src) return;
+    e.preventDefault(); openPlayer(src, a.dataset.ratio === 'wide');
+  });
+  document.getElementById('player-close').addEventListener('click', closePlayer);
+  player.addEventListener('click', function (e) { if (e.target === player) closePlayer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !player.hidden) closePlayer(); });
+
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+      document.querySelectorAll('[data-panel]').forEach(function (p) { p.hidden = p.dataset.panel !== t.dataset.tab; });
+    });
+  });
+
+  var bar = document.getElementById('topbar');
+  function onScroll() { bar.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  document.querySelectorAll('.grid, .hook-row').forEach(function (g) { g.querySelectorAll('.card').forEach(function (c, i) { c.style.setProperty('--i', i % 8); }); });
+
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js');
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.04 });
+  els.forEach(function (el) { io.observe(el); });
+
+  var reel = document.querySelector('.reel');
+  if (reel && window.matchMedia('(pointer: fine)').matches) {
+    reel.style.transition = 'transform .4s ease-out';
+    reel.addEventListener('mousemove', function (e) {
+      var r = reel.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      reel.style.transform = 'perspective(900px) rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 6) + 'deg)';
+    });
+    reel.addEventListener('mouseleave', function () { reel.style.transform = ''; });
+  }
+})();
+</script>
+</body>
+</html>

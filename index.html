@@ -141,11 +141,28 @@ h2::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; wi
 .tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
 
 .about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 48px; align-items: center; }
-.portrait { position: relative; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, .55), 0 0 0 1px var(--line); aspect-ratio: 1 / 1; max-width: 100%; }
-.portrait img { width: 100%; height: 100%; object-fit: cover; }
-.badge { position: absolute; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 10px; background: rgba(23, 10, 13, .85); backdrop-filter: blur(8px); padding: 8px 14px 8px 8px; border-radius: 999px; border: 1px solid var(--line); }
-.badge img { width: 34px; height: 34px; border-radius: 8px; }
-.badge span { font: 700 12px var(--caps); letter-spacing: .08em; color: var(--gold); }
+.portrait-wrap { position: relative; padding: 6px; border-radius: 30px; width: 100%; max-width: 460px; justify-self: center; animation: float 7s ease-in-out infinite; isolation: isolate; }
+.portrait-wrap::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(from var(--spin, 0deg), var(--gold), transparent 25%, var(--maroon) 50%, transparent 75%, var(--gold)); animation: spin 6s linear infinite; z-index: -1; }
+.portrait-wrap::after { content: ""; position: absolute; inset: -18px; border-radius: 40px; background: radial-gradient(circle, rgba(242, 182, 48, .35), transparent 65%); filter: blur(24px); z-index: -2; animation: breathe 5s ease-in-out infinite; }
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+@keyframes breathe { 50% { opacity: .55; transform: scale(.96); } }
+.portrait { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 1 / 1; max-width: 100%; background: var(--surface); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+.portrait:hover img { transform: scale(1.04); }
+.portrait::before { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(115deg, transparent 35%, rgba(255, 243, 204, .35) 50%, transparent 65%); transform: translateX(-120%); animation: shine 5.5s ease-in-out infinite 1.5s; pointer-events: none; }
+@keyframes shine { 0%, 60% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+.portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(23, 10, 13, .85)); }
+.name-plate { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 3; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.name-plate b { display: block; font: 700 clamp(26px, 3.2vw, 36px)/1.05 var(--display); color: #fff7e6; text-shadow: 0 4px 18px rgba(0, 0, 0, .5); }
+.name-plate small { display: block; margin-top: 6px; font: 700 11px var(--caps); letter-spacing: .2em; color: var(--gold-2); }
+.name-plate img { width: 46px; height: 46px; border-radius: 12px; box-shadow: 0 0 0 1px rgba(255, 213, 110, .45); flex: none; }
+.js .reveal .portrait-wrap { opacity: 0; transform: scale(.92) rotate(-2deg); transition: opacity .9s, transform 1s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal.in .portrait-wrap { opacity: 1; transform: none; }
+.chips-float { position: absolute; z-index: 4; font: 500 12px var(--mono); padding: 8px 12px; border-radius: 999px; background: var(--gold); color: var(--on-gold); box-shadow: 0 10px 24px rgba(0, 0, 0, .35); animation: float 5s ease-in-out infinite; }
+.chips-float.c1 { top: 8%; left: -14px; }
+.chips-float.c2 { top: 38%; right: -18px; animation-delay: -1.6s; }
+.chips-float.c3 { top: 64%; left: -10px; animation-delay: -3.2s; }
 .about p { color: var(--muted); max-width: 56ch; }
 .about strong { color: var(--ink); }
 .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
@@ -211,7 +228,7 @@ footer.foot { border-top: 1px solid var(--line); padding-block: 22px 96px; color
   .reel a:nth-child(5) { transform: translateX(130px) rotate(9deg) scale(.8); }
   .steps { grid-template-columns: minmax(0, 1fr); gap: 54px; }
   .steps::before { display: none; }
-  .portrait { max-width: 420px; }
+  .portrait-wrap { max-width: 400px; }
   .contact { padding: 28px; }
 }
 @media (max-width: 700px) { .nav a:not(.btn) { display: none; } .logo-word small { display: none; } }
@@ -280,6 +297,29 @@ footer.foot { border-top: 1px solid var(--line); padding-block: 22px 96px; color
 </div>
 
 <main class="wrap" id="work">
+
+  <section class="reveal" id="about" aria-labelledby="about-h">
+    <div class="about">
+      <div class="portrait-wrap">
+        <div class="portrait">
+          <img src="img/umar.jpg" alt="Umar Farooq, founder of UF Productions">
+          <div class="name-plate"><div><b>Umar Farooq</b><small>Founder · UF Productions</small></div><img src="img/logo-96.png" alt=""></div>
+        </div>
+        <span class="chips-float c1" aria-hidden="true">AI UGC</span>
+        <span class="chips-float c2" aria-hidden="true">Pixar 3D</span>
+        <span class="chips-float c3" aria-hidden="true">VSLs</span>
+      </div>
+      <div>
+        <div class="kicker">About</div>
+        <h2 id="about-h">Hi, I'm Umar.</h2>
+        <p>I run <strong>UF Productions</strong>, a small AI video studio. I write, generate and edit every ad myself, from the hook to the final cut, so the story stays tight and nothing gets lost between people.</p>
+        <p>Most of my work is for <strong>DTC and supplement brands</strong> on Meta and TikTok: AI UGC, animated story ads, sung narration ads and VSLs. I also make long AI documentaries and viral reels.</p>
+        <div class="tools" aria-label="Tools I use">
+          <span class="tool">Higgsfield</span><span class="tool">Kling</span><span class="tool">Veo</span><span class="tool">Seedance</span><span class="tool">Runway</span><span class="tool">MiniMax</span><span class="tool">OpenArt</span><span class="tool">Arcads</span><span class="tool">Premiere Pro</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="reveal" aria-labelledby="ugc-h">
     <div class="sec-head">
@@ -403,23 +443,7 @@ footer.foot { border-top: 1px solid var(--line); padding-block: 22px 96px; color
     </div>
   </section>
 
-  <section class="reveal" id="about" aria-labelledby="about-h">
-    <div class="about">
-      <div class="portrait">
-        <img src="img/umar.jpg" alt="Umar Farooq, founder of UF Productions" loading="lazy">
-        <div class="badge"><img src="img/logo-96.png" alt=""><span>UF PRODUCTIONS</span></div>
-      </div>
-      <div>
-        <div class="kicker">About</div>
-        <h2 id="about-h">Hi, I'm Umar.</h2>
-        <p>I run <strong>UF Productions</strong>, a small AI video studio. I write, generate and edit every ad myself, from the hook to the final cut, so the story stays tight and nothing gets lost between people.</p>
-        <p>Most of my work is for <strong>DTC and supplement brands</strong> on Meta and TikTok: AI UGC, animated story ads, sung narration ads and VSLs. I also make long AI documentaries and viral reels.</p>
-        <div class="tools" aria-label="Tools I use">
-          <span class="tool">Higgsfield</span><span class="tool">Kling</span><span class="tool">Veo</span><span class="tool">Seedance</span><span class="tool">Runway</span><span class="tool">MiniMax</span><span class="tool">OpenArt</span><span class="tool">Arcads</span><span class="tool">Premiere Pro</span>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <section class="reveal" aria-labelledby="proc-h">
     <div class="sec-head"><div><div class="kicker">Process</div><h2 id="proc-h">How working together goes</h2></div></div>
